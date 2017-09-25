@@ -22,16 +22,12 @@ describe Orderly do
 
     it "handles for this missing" do
       page.visit "/thisnothat"
-      error_text = "Could not locate later content on page: #{that}"
-      expect { expect(this).to appear_before(that) }.to raise_error error_text
-      expect { expect(this).not_to appear_before(that) }.to raise_error error_text
+      expect(this).not_to appear_before(that)
     end
 
     it "handles for this missing" do
       page.visit "/thatnothis"
-      error_text = "Could not locate earlier content on page: #{this}"
-      expect { expect(this).to appear_before(that) }.to raise_error error_text
-      expect { expect(this).not_to appear_before(that) }.to raise_error error_text
+      expect(this).not_to appear_before(that)
     end
   end
 
