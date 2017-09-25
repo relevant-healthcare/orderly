@@ -22,16 +22,16 @@ describe Orderly do
 
     it "handles for this missing" do
       page.visit "/thisnothat"
-      expect do
-        expect(this).to appear_before(that)
-      end.to raise_error(Capybara::ExpectationNotMet)
+      error_text = "Could not locate later content on page: #{that}"
+      expect { expect(this).to appear_before(that) }.to raise_error error_text
+      expect { expect(this).not_to appear_before(that) }.to raise_error error_text
     end
 
     it "handles for this missing" do
       page.visit "/thatnothis"
-      expect do
-        expect(this).to appear_before(that)
-      end.to raise_error(Capybara::ExpectationNotMet)
+      error_text = "Could not locate earlier content on page: #{this}"
+      expect { expect(this).to appear_before(that) }.to raise_error error_text
+      expect { expect(this).not_to appear_before(that) }.to raise_error error_text
     end
   end
 
