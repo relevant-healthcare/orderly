@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'capybara'
 
 describe Orderly do
-  let(:this) { "<p>One piece of content</p>" }
-  let(:that) { "<p>Another piece of content</p>" }
+  let(:this) { "One piece of content" }
+  let(:that) { "Another piece of content" }
 
   let(:page) do
     Capybara::Session.new(:rack_test, TestApp)
@@ -22,12 +22,16 @@ describe Orderly do
 
     it "handles for this missing" do
       page.visit "/thisnothat"
-      expect(this).not_to appear_before(that)
+      expect do
+        expect(this).to appear_before(that)
+      end.to raise_error(Capybara::ExpectationNotMet)
     end
 
     it "handles for this missing" do
       page.visit "/thatnothis"
-      expect(this).not_to appear_before(that)
+      expect do
+        expect(this).to appear_before(that)
+      end.to raise_error(Capybara::ExpectationNotMet)
     end
   end
 
